@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "tokens.h"
+#include <common.h>
 
-nodeType *opr(int oper, int nops, ...);
+nodeType *oper(int oper, int nops, ...);
 nodeType *id(int i);
 nodeType *con(int value);
 void freeNode(nodeType *p);
@@ -23,12 +23,18 @@ int sym[26];
     nodeType *nPtr;
 };
 
-%token <iValue> INTEGER;
+%token <iValue> NUMBER;
 %token <sIndex> VARIABLE;
-%token IF PRINT
+%token IF PRINT INPUT
+%token GOTO
 %token ELSE
+%token END_COMMENT
+%token START_COMMENT
 
-%left GE LE EQ NE
+%nonassoc IFX
+%nonassoc ELSE
+
+%left GE LE EQ NE '<' '>'
 %left '+' '-'
 %left '*' '/'
 
@@ -37,19 +43,19 @@ int sym[26];
 %%
 
 stmt:
-      END_COMMENT               { $$ = opr(END_COMMENT, 2, NULL, NULL); }
+      END_COMMENT               { $$ = oper(END_COMMENT, 2, NULL, NULL); }
     | expr END_COMMENT          { $$ = $1; }
     | PRINT expr END_COMMENT    { $$ = oper(PRINT, 1, $2); }
     ;
 
 stmt_list:
       stmt              { $$ = $1; }
-    | stmt_list         { $$ = oper(';', 2, $1, $2); }
+    | stmt_list stmt    { $$ = oper(',', 2, $1, $2); }
     ;
 
 expr:
-      INTEGER           { $$ = con($1); }
-      VARIABLE          { $$ = id($1); }
+      NUMBER            { $$ = con($1); }
+    | VARIABLE          { $$ = id($1); }
     | expr '+' expr     { $$ = oper('+', 2, $1, $3); }
     | expr '-' expr     { $$ = oper('-', 2, $1, $3); }
     | expr '*' expr     { $$ = oper('*', 2, $1, $3); }
@@ -60,7 +66,7 @@ expr:
     | expr LE expr      { $$ = oper(LE, 2, $1, $3); }
     | expr EQ expr      { $$ = oper(EQ, 2, $1, $3); }
     | expr NE expr      { $$ = oper(NE, 2, $1, $3); }
-    | '(' expr ')'      { $$ = $2 }
+    | '(' expr ')'      { $$ = $2; }
     ;
 
 %%
@@ -87,7 +93,7 @@ nodeType *id(int i) {
     return p;
 }
 
-nodeType *opr(int oper, int nops, ...) {
+nodeType *oper(int oper, int nops, ...) {
     va_list ap;
     nodeType *p;
     size_t size;
@@ -128,10 +134,6 @@ int ex(nodeType *p) {
     case typeId: return sym[p->id.i];
     case typeOpr:
     switch(p->opr.oper) {
-        case WHILE: 
-            while(ex(p->opr.op[0]))
-                ex(p->opr.op[1]);
-                return 0;
         case IF: 
             if (ex(p->opr.op[0]))
                 ex(p->opr.op[1]);
@@ -145,7 +147,6 @@ int ex(nodeType *p) {
             ex(p->opr.op[0]);
             return ex(p->opr.op[1]);
         case '=': return sym[p->opr.op[0]->id.i] = ex(p->opr.op[1]);
-        case UMINUS: return -ex(p->opr.op[0]);
         case '+': return ex(p->opr.op[0]) + ex(p->opr.op[1]);
         case '-': return ex(p->opr.op[0]) - ex(p->opr.op[1]);
         case '*': return ex(p->opr.op[0]) * ex(p->opr.op[1]);
