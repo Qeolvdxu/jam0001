@@ -28,6 +28,7 @@ typedef union nodeTypeTag {
     idNodeType id; /* identifiers */
     oprNodeType opr; /* operators */
 } nodeType;
+
 extern int sym[26]; 
 
 #endif // COMMON_H

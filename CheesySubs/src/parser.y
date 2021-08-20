@@ -42,6 +42,15 @@ int sym[26];
 
 %%
 
+program:
+    function                    { exit(0); }
+    ;
+
+function:
+      function stmt             { ex($2); freeNode($2); }
+    | /* NULL */
+    ;
+
 stmt:
       END_COMMENT               { $$ = oper(END_COMMENT, 2, NULL, NULL); }
     | expr END_COMMENT          { $$ = $1; }
