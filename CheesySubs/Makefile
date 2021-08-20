@@ -11,13 +11,17 @@ all: mommy
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
-mommy: $(OBJS)
-	$(CCCC) -d $(BISON)
-	$(CCC) $(LEX)
+mommy: makeflex makebison $(OBJS)
 	$(CC) -o $@ $^ lex.yy.c parser.tab.c $(CFLAGS)
 
+makeflex:
+	$(CCC) $(LEX)
+
+makebison:
+	$(CCCC) -d $(BISON)
+
 clean:
-	rm $(OBJS) mommy
+	rm -f $(OBJS) mommy lex.yy.c parser.tab.*
 
 
 .PHONY: mommy
