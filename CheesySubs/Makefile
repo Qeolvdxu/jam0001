@@ -1,14 +1,18 @@
 CC=gcc
-CFLAGS=-Iinclude -llua5.1 -lm -std=gnu99 -O0 -g
+CCC=flex
+CFLAGS=-Iinclude -lm -std=gnu99 -O0 -g
 DEPS = 
-OBJS = src/main.c
+OBJS = lex.yy.c
+LEX = src/lex.l
 
 all: mommy
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
+
 mommy: $(OBJS)
+	$(CCC) $(LEX) 
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
