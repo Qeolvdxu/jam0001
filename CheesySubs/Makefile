@@ -1,14 +1,16 @@
 CC=gcc
-CFLAGS=-Iinclude -lfl -lm -std=gnu99 -O0 -g
-DEPS = 
+CCC=flex
 OBJS = src/main.o src/lex.yy.o
+LEX = src/lex.l
 
 all: mommy
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
+
 mommy: $(OBJS)
+	$(CCC) $(LEX) -o $^
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
