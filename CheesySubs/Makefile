@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Iinclude -llua5.1 -lm -std=gnu99 -O0 -g
+CFLAGS=-Iinclude -lfl -lm -std=gnu99 -O0 -g
 DEPS = 
-OBJS = src/main.c
+OBJS = src/main.o src/lex.yy.o
 
 all: mommy
 
@@ -12,7 +12,7 @@ mommy: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm $(OBJS) fbanim
+	rm $(OBJS) mommy
 
 
 .PHONY: mommy
