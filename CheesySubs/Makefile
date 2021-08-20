@@ -1,8 +1,6 @@
 CC=gcc
 CCC=flex
-CFLAGS=-Iinclude -lm -std=gnu99 -O0 -g
-DEPS = 
-OBJS = lex.yy.c
+OBJS = src/main.o src/lex.yy.o
 LEX = src/lex.l
 
 all: mommy
@@ -12,11 +10,11 @@ all: mommy
 
 
 mommy: $(OBJS)
-	$(CCC) $(LEX) 
+	$(CCC) $(LEX) -o $^
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm $(OBJS) fbanim
+	rm $(OBJS) mommy
 
 
 .PHONY: mommy
