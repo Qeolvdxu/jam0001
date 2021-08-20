@@ -1,21 +1,19 @@
 #ifndef TOKENS_H
 #define TOKENS_H
 
-//enum {
-//    COMMENT_START,
-//    COMMENT_END,
-//    VARIABLE,
-//    NUMBER,
-//    STRING,
-//    PRINT,
-//    INPUT,
-//    IF,
-//    ELSE,
-//    NE,
-//    EQ,
-//    GT,
-//    ST,
-//    GOTO,
-//};
+    _.---.._             _.---...__
+ .-'   /\   \          .'  /\     /
+ `.   (  )   \        /   (  )   /
+   `.  \/   .'\      /`.   \/  .'
+     ``---''   )    (   ``---''
+             .';.--.;`.
+           .' /_...._\ `.
+         .'   `.a  a.'   `.
+        (        \/        )
+         `.___..-'`-..___.'
+            \          /
+             `-.____.-'
+
+       NOTHING HERE TRAVELLER
 
 #endif // TOKENS_H
