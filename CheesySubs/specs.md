@@ -7,8 +7,8 @@
 | sus?                                     |  **if**                 |
 | no u                                     |  **else**               |
 | we live in a (line number)               |  **goto**               |
-| y'is                                     |  **!=**                 |
-| y'ain't                                  |  **==**                 |
+| y'is                                     |  **==**                 |
+| y'ain't                                  |  **!=**                 |
 | is yuge                                  |  **>**                  |
 | compensating for                         |  **<**                  |
 | -|-                                      |  **+**                  |
