@@ -22,7 +22,7 @@ typedef struct {
     union nodeTypeTag *op[1]; /* operands (expandable) */
 } oprNodeType;
 
-typedef union nodeTypeTag {
+typedef %union nodeTypeTag {
     nodeEnum type; /* type of node */
     conNodeType con; /* constants */
     idNodeType id; /* identifiers */
