@@ -14,7 +14,7 @@
 | -|-                                      |  **+**                  |
 | ---                                      |  **-**                  |
 | -:-                                      |  **/**                  |
-| >.<                                      |  __*__                  |
+| >|<                                      |  __*__                  |
 | .                                        |  **;**                  |
 | too bad that didnt't kill me (ret_value) |  **exit (ret_value)**   |
 
