@@ -1,9 +1,6 @@
-#include <stdio.h>
+#include <parser.tab.h>
 
-int main(void)
-{
-	puts("depression");
-
+int main(void) {
+	yyparse();
 	return 0;
 }
-
